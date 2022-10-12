@@ -27,4 +27,14 @@ public class UserControllers {
         }
     }
 
+    @PostMapping(value = "/login")
+    public ResponseEntity<User> login(@RequestBody User user) {
+        try{
+            User userCreated = userService.login(user);
+            return new ResponseEntity<>(userCreated, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
 }
