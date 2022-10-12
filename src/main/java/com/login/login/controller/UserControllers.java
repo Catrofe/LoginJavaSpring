@@ -1,5 +1,6 @@
 package com.login.login.controller;
 
+import com.login.login.dto.UserRegisterDTO;
 import com.login.login.entities.User;
 import com.login.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ public class UserControllers {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserRegisterDTO> createUser(@RequestBody User user) {
         try{
-            User userCreated = userService.createUser(user);
+            UserRegisterDTO userCreated = userService.createUser(user);
             return new ResponseEntity<>(userCreated, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
