@@ -15,10 +15,12 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String email;
     private String name;
+    @Column(unique = true)
     private String cpf;
     private String phone;
     private String password;
