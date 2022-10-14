@@ -27,7 +27,7 @@ public class SecurityConfig{
 
     private static final String[] PUBLIC_MATCHERS = {
             "/users",
-            "/users/login"
+            "/users/login",
     };
 
     @Bean

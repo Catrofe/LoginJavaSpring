@@ -7,11 +7,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.context.annotation.Configuration;
 import com.login.login.security.dto.GenerationToken;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 
-@Configuration
+@Component
 public class JwtUtil {
 
     private final String secret = "8pxTH7h8yk@8#jAZjDGaHv%d%fWqUr9zR!4WTzbJ";
@@ -20,7 +21,7 @@ public class JwtUtil {
     private final HashMap<String, Object> hashMap = new HashMap<>();
 
     public String generationToken(Long id){
-        hashMap.put("id", id);
+        hashMap.put("id", id.toString());
         return Jwts
                 .builder()
                 .setClaims(hashMap)
@@ -52,6 +53,6 @@ public class JwtUtil {
     public Long getId(String token) {
         Claims claims = getClaims(token);
         assert claims != null;
-        return (Long) claims.get("id");
+        return Long.valueOf(claims.get("id").toString());
     }
 }
