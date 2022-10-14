@@ -1,9 +1,6 @@
 package com.login.login.service;
 
-import com.login.login.dto.ChangePassword;
-import com.login.login.dto.UserGetDTO;
-import com.login.login.dto.UserLoginDTO;
-import com.login.login.dto.UserRegisterDTO;
+import com.login.login.dto.*;
 import com.login.login.entities.User;
 import com.login.login.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +42,20 @@ public class UserService {
         user.setPassword(encoder.encode(password.getPassword()));
         user = userRepository.save(user);
         return new UserLoginDTO(user.getId().toString(), user.getEmail());
+    }
+
+    public UserGetDTO update(Long id, UserEdit user) {
+        User userUpdate = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+        if (user.getName() != null) {
+            userUpdate.setName(user.getName());
+        }
+        if (user.getEmail() != null) {
+            userUpdate.setEmail(user.getEmail());
+        }
+        if (user.getPhone() != null) {
+            userUpdate.setPhone(user.getPhone());
+        }
+        userUpdate = userRepository.save(userUpdate);
+        return new UserGetDTO(userUpdate.getId(), userUpdate.getEmail(), userUpdate.getName(), userUpdate.getCpf(), userUpdate.getPhone());
     }
 }

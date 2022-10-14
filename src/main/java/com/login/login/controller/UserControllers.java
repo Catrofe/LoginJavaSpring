@@ -67,4 +67,17 @@ public class UserControllers {
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
+    @PatchMapping(value = "")
+    public ResponseEntity<UserGetDTO> editUser(@RequestBody UserEdit user, @RequestHeader(value = "Authorization") String token) throws JsonProcessingException {
+        Claims claims = jwtUtil.getClaims(token.replace("Bearer ", ""));
+        Extration extration = new Extration();
+        Long id = extration.extrationId(claims);
+        try {
+            User byEmail = userService.findByEmail(user.getEmail());
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }catch (Exception e){
+            UserGetDTO byId = userService.update(id, user);
+            return new ResponseEntity<>(byId, HttpStatus.OK);
+        }
+    }
 }
